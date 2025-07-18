@@ -1,0 +1,88 @@
+.about-page {
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  /* Hero banner */
+  .about-hero {
+    background: #f4f4f4;
+    padding: 3rem 1rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  
+  .about-hero h2 {
+    color: #004586;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-hero p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* Mission & Vision */
+  .about-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .value-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .value-card h3 {
+    color: #004586;
+    margin-bottom: 0.5rem;
+  }
+  
+  .value-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  /* Contact section */
+  .about-contact {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: #e9ecef;
+    border-radius: 8px;
+  }
+  
+  .about-contact h3 {
+    color: #004586;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-contact p {
+    font-size: 1rem;
+  }
+  
+  .about-contact a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .about-contact a:hover {
+    text-decoration: underline;
+  }
+  
