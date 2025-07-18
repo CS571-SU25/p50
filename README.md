@@ -1,12 +1,62 @@
-# React + Vite
+# Business Finance Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for tracking business income and expenses, viewing monthly trends, and estimating taxes—built with **React** and featuring modern, interactive charts.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User-Friendly Dashboard:** Stat cards for key metrics, Income vs. Expenses pie chart, and monthly income charts (line and bar).
+- **Portfolio Manager:** Add, view, and remove revenue/expense entries with date and category.
+- **State-Based Tax Estimator:** Instantly estimates taxes based on your business net profit and selected U.S. state.
+- **Persistent Data:** All information is saved in your browser’s localStorage.
+- **Responsive Design:** Works on both desktop and mobile devices.
 
-## Expanding the ESLint configuration
+## Quick Start
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+To install this project, run the following commands in your terminal:
+
+git clone <your-repo-url>
+cd <project-folder>
+npm install
+
+### Run Locally
+
+npm start
+# or
+yarn start
+
+Visit [http://localhost:3000/](http://localhost:3000/) in your browser.
+
+## Key Technologies
+
+- **React** - UI framework
+- **Recharts** - Dynamic, interactive charts
+- **localStorage** - Persistent storage in the browser
+
+## Usage
+
+1. **Portfolio Entries**
+   - Add revenues or expenses with amount, date, and category.
+   - Remove entries as needed.
+
+2. **Dashboard**
+   - View stat cards for total revenue, expenses, and net profit.
+   - Pie chart: compares total income vs expenses.
+   - Line & bar charts: visualize monthly income trends.
+
+3. **Estimated Taxes**
+   - Select your state to see a quick tax estimate based on business profit.
+
+## Customization
+
+- **Tax Rates:** Update in `EstimatedTaxes.jsx` as needed.
+- **US State List:** Edit in `EstimatedTaxes.jsx` for your needs.
+- **Styling:** UI is easily customizable with CSS or your favorite styling solution.
+
+---
