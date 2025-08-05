@@ -7,6 +7,7 @@ function Header() {
   function handleLogout(e) {
     e.preventDefault(); // Prevent any default behavior
     localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("portfolio");
     navigate("/login");
   }
 

@@ -36,7 +36,7 @@ export default function Home() {
           Empower your startup or small business with smarter financial management.
           Track revenue, expenses, and profits—all with a few clicks.
         </p>
-        <Link to="/login">
+        <Link to="/register">
           <Button variant="primary">Get Started</Button>
         </Link>
       </section>
