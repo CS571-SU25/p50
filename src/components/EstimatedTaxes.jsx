@@ -41,7 +41,7 @@ export default function EstimatedTaxes() {
       margin: "2rem auto",
       textAlign: "center"
     }}>
-      <h3>Estimated Taxes</h3>
+      <h1>Estimated Taxes</h1>
       <div style={{ fontSize: 38, color: "#eab308", fontWeight: "bold" }}>
         ${tax.toLocaleString(undefined, { maximumFractionDigits:0 })}
       </div>

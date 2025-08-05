@@ -1,8 +1,5 @@
 import { useState } from "react";
-
-// In a "real" app you would POST to an API:
-// await fetch('/api/register', {method: 'POST', body: JSON.stringify(form)})
-// For this mock, we'll just use localStorage for demo user registration.
+import { Form, Button, Container, Alert } from "react-bootstrap";
 
 export default function Register() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -14,42 +11,51 @@ export default function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Simulate storing the user
     localStorage.setItem("demoUser", JSON.stringify(form));
     setMessage("Account created! You can now login.");
     setForm({ email: "", password: "" });
   }
 
   return (
-    <div style={{ maxWidth: 350, margin: "3rem auto", padding: 20, background: "#f9fafb", borderRadius: 8 }}>
-      <h2>Create Account</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          required
-          onChange={handleChange}
-          style={{ width: "100%", marginBottom: 12, padding: 8, borderRadius: 4, border: "1px solid #ccc" }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          required
-          onChange={handleChange}
-          style={{ width: "100%", marginBottom: 16, padding: 8, borderRadius: 4, border: "1px solid #ccc" }}
-        />
-        <button
-          type="submit"
-          style={{ width: "100%", padding: 10, borderRadius: 4, background: "#2C3E50", color: "white", border: "none" }}
-        >
+    <Container style={{ maxWidth: 400, marginTop: "4rem" }}>
+      <h1 className="mb-4">Register/Create Account</h1>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="registerEmail" className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Enter email here"
+            value={form.email}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="registerPassword" className="mb-4">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Enter password here"
+            value={form.password}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </Form.Group>
+
+        <Button type="submit" variant="dark" className="w-100">
           Sign Up
-        </button>
-      </form>
-      {message && <div style={{ color: "green", marginTop: 10 }}>{message}</div>}
-    </div>
+        </Button>
+      </Form>
+
+      {message && (
+        <Alert variant="success" className="mt-3">
+          {message}
+        </Alert>
+      )}
+    </Container>
   );
 }

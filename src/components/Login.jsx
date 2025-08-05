@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// In a real app, POST form to /api/login and get a real response/token.
-// We'll "authenticate" by comparing against localStorage.
+import { Form, Button, Alert, Container } from "react-bootstrap";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -15,7 +13,6 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Simulate "fetch" from a backend by loading from localStorage
     const demoUser = JSON.parse(localStorage.getItem("demoUser"));
     if (
       demoUser &&
@@ -31,47 +28,48 @@ export default function Login() {
   }
 
   return (
-    <div style={{
-      maxWidth: 320,
-      margin: '5rem auto',
-      padding: 30,
-      borderRadius: 8,
-      background: '#f9fafb',
-      boxShadow: '0 2px 8px #eee'
-    }}>
-      <h2 style={{ marginBottom: 24 }}>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          required
-          onChange={handleChange}
-          style={{ width: '100%', marginBottom: 12, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          required
-          onChange={handleChange}
-          style={{ width: '100%', marginBottom: 20, padding: 8, borderRadius: 4, border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{
-          width: '100%',
-          padding: 10,
-          borderRadius: 4,
-          background: '#2C3E50',
-          color: 'white',
-          border: 'none',
-          fontWeight: 'bold'
-        }}>
+    <Container style={{ maxWidth: 400, marginTop: '4rem' }}>
+      <h1 className="mb-4">Login</h1>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="loginEmail" className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder = "Enter email here"
+            value={form.email}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="loginPassword" className="mb-4">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder = "Enter password here"
+            value={form.password}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </Form.Group>
+
+        <Button type="submit" variant="dark" className="w-100">
           Login
-        </button>
-      </form>
-      {message && <div style={{ marginTop: 12, color: message.startsWith("Login") ? "green" : "red" }}>{message}</div>}
-    </div>
+        </Button>
+      </Form>
+
+      {message && (
+        <Alert
+          variant={message.startsWith("Login") ? "success" : "danger"}
+          className="mt-3"
+        >
+          {message}
+        </Alert>
+      )}
+    </Container>
   );
 }

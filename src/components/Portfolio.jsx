@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import { Container, Form, Button, Row, Col, Table, Badge } from "react-bootstrap";
 
-// Use localStorage OR swap to sessionStorage if desired
 const storage = localStorage;
 
-// Helper to load/save entries
 function loadPortfolio() {
   const data = storage.getItem("portfolio");
   return data ? JSON.parse(data) : [];
@@ -11,11 +10,9 @@ function loadPortfolio() {
 
 function savePortfolio(entries) {
   storage.setItem("portfolio", JSON.stringify(entries));
-  // Notify dashboard (in case it's open in another tab)
   window.dispatchEvent(new Event("storage"));
 }
 
-// Generate a unique id (timestamp + random) for each entry
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 }
@@ -26,7 +23,7 @@ export default function Portfolio() {
     type: "Revenue",
     amount: "",
     notes: "",
-    date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+    date: new Date().toISOString().slice(0, 10),
   });
 
   useEffect(() => {
@@ -42,8 +39,7 @@ export default function Portfolio() {
     const newEntry = {
       ...form,
       amount: Number(form.amount),
-      date: form.date || new Date().toISOString().slice(0, 10),
-      id: generateId(), // Unique id for deletion and React key
+      id: generateId(),
     };
     const updated = [...entries, newEntry];
     setEntries(updated);
@@ -56,54 +52,74 @@ export default function Portfolio() {
     });
   }
 
-  // Remove entry by id
   function handleRemove(id) {
-    const updated = entries.filter(e => e.id !== id); // Remove by id[1][2][4][5][6][10]
+    const updated = entries.filter((e) => e.id !== id);
     setEntries(updated);
     savePortfolio(updated);
   }
 
   return (
-    <div style={{ maxWidth: 600, margin: "2rem auto", padding: 20 }}>
-      <h2>Add Portfolio Entry</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: "2rem", display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <select name="type" value={form.type} onChange={handleChange}>
-          <option>Revenue</option>
-          <option>Expense</option>
-        </select>
-        <input
-          name="amount"
-          placeholder="Amount"
-          value={form.amount}
-          onChange={handleChange}
-          type="number"
-          min="0"
-          required
-          style={{ width: 110 }}
-        />
-        <input
-          name="notes"
-          placeholder="Notes (e.g., category)"
-          value={form.notes}
-          onChange={handleChange}
-          style={{ width: 170 }}
-        />
-        <input
-          name="date"
-          type="date"
-          value={form.date}
-          onChange={handleChange}
-          style={{ width: 130 }}
-        />
-        <button type="submit" style={{ padding: "0 16px" }}>Add</button>
-      </form>
-      <h3>Portfolio Entries</h3>
-      <table style={{ width: "100%", background: "#fff", borderRadius: 8, boxShadow: "0 1px 5px #eee", fontSize: 16 }}>
+    <Container className="mt-4">
+      <h1 className="mb-4">Add Portfolio Entry</h1>
+      <Form onSubmit={handleSubmit}>
+        <Row className="g-3">
+          <Col md={2}>
+            <Form.Group controlId="entryType">
+              <Form.Label>Type</Form.Label>
+              <Form.Select name="type" value={form.type} onChange={handleChange} required>
+                <option>Revenue</option>
+                <option>Expense</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group controlId="entryAmount">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control
+                type="number"
+                name="amount"
+                value={form.amount}
+                onChange={handleChange}
+                required
+                min="0"
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="entryNotes">
+              <Form.Label>Category/Notes</Form.Label>
+              <Form.Control
+                type="text"
+                name="notes"
+                value={form.notes}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group controlId="entryDate">
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="date"
+                value={form.date}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2} className="d-flex align-items-end">
+            <Button type="submit" variant="success" className="w-100">Add</Button>
+          </Col>
+        </Row>
+      </Form>
+
+      <h2 className="mt-5 mb-3">Portfolio Entries</h2>
+      <Table striped bordered hover responsive>
         <thead>
-          <tr style={{ background: "#f5f7fa" }}>
-            <th style={{ padding: 8 }}>Type</th>
+          <tr>
+            <th>Type</th>
             <th>Amount</th>
-            <th>Category/Notes</th>
+            <th>Notes</th>
             <th>Date</th>
             <th>Action</th>
           </tr>
@@ -111,38 +127,33 @@ export default function Portfolio() {
         <tbody>
           {entries.length === 0 ? (
             <tr>
-              <td colSpan={5} style={{ color: "#888", textAlign: "center", padding: 16 }}>
-                No portfolio entries yet.
-              </td>
+              <td colSpan={5} className="text-center text-muted">No portfolio entries yet.</td>
             </tr>
           ) : (
             entries.map((e) => (
               <tr key={e.id}>
-                <td style={{ padding: 8 }}>{e.type}</td>
+                <td>
+                  <Badge bg={e.type === "Revenue" ? "success" : "danger"}>
+                    {e.type}
+                  </Badge>
+                </td>
                 <td>${Number(e.amount).toLocaleString()}</td>
                 <td>{e.notes}</td>
                 <td>{e.date}</td>
                 <td>
-                  <button
-                    style={{
-                      background: "#dc2626",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: 4,
-                      padding: "3px 8px",
-                      cursor: "pointer"
-                    }}
+                  <Button
+                    variant="danger"
+                    size="sm"
                     onClick={() => handleRemove(e.id)}
-                    aria-label="Remove this entry"
                   >
                     Remove
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))
           )}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 }

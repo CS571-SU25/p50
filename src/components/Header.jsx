@@ -19,7 +19,14 @@ function Header() {
         <Link to="/about" style={{ color: 'white', margin: '0 1rem', textDecoration: 'none' }}>About</Link>
         <Link to="/login" style={{ color: 'white', margin: '0 1rem', textDecoration: 'none' }}>Login</Link>
         <Link to="/register" style={{ color: 'white', margin: '0 1rem', textDecoration: 'none' }}>Register</Link>
-        
+        {localStorage.getItem("loggedInUser") && (
+          <Link to="/login" style={{ color: 'white', margin: '0 1rem', textDecoration: 'none' }} onClick={() => {
+            localStorage.removeItem("loggedInUser");
+          }}>
+            Logout
+          </Link>
+        )}
+
       </nav>
     </header>
   );
