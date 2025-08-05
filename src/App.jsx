@@ -7,6 +7,7 @@ import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Portfolio from './components/Portfolio';
 import EstimatedTaxes from "./components/EstimatedTaxes";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/taxes" element={<EstimatedTaxes />} />
+
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </Router>
   );

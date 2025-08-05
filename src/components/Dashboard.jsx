@@ -1,9 +1,11 @@
+// components/Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import {
   PieChart, Pie, Cell, Tooltip, Legend,
   LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   BarChart, Bar
 } from "recharts";
+import StatCard from "./StatCard";
 
 // Chart colors
 const PIE_COLORS = ["#22C55E", "#F87171"];
@@ -16,12 +18,7 @@ function getPortfolioData() {
   const saved = localStorage.getItem("portfolio");
   const entries = saved ? JSON.parse(saved) : [];
 
-  const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-
-  // Monthly Revenue (for both line/bar)
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const monthlyRevenue = Array(12).fill(0);
 
   let totalRevenue = 0;
@@ -38,19 +35,18 @@ function getPortfolioData() {
     }
   }
 
-  // Pie Data (Income vs Expenses)
   const pieData = [
     { name: "Income", value: totalRevenue },
     { name: "Expenses", value: totalExpense }
   ];
 
-  // Data for line and bar chart (monthly)
   const monthlyData = months.map((month, i) => ({
     month,
     Revenue: monthlyRevenue[i]
   }));
 
   const netProfit = totalRevenue - totalExpense;
+
   return { pieData, monthlyData, totalRevenue, totalExpense, netProfit };
 }
 
@@ -75,11 +71,12 @@ export default function Dashboard() {
   return (
     <div style={{ padding: "2rem max(2vw,16px)" }}>
       <h1 style={{ marginBottom: 24 }}>Dashboard</h1>
+
       {/* Stat Cards */}
       <div style={{ display: "flex", gap: 40, flexWrap: "wrap", marginBottom: 40 }}>
-        <StatCard label="Total Revenue" value={data.totalRevenue} color="#22C55E" />
-        <StatCard label="Total Expenses" value={data.totalExpense} color="#F87171" />
-        <StatCard label="Net Profit" value={data.netProfit} color="#2563EB" />
+        <StatCard title="Total Revenue" value={data.totalRevenue} bg="success" text="white" />
+        <StatCard title="Total Expenses" value={data.totalExpense} bg="danger" text="white" />
+        <StatCard title="Net Profit" value={data.netProfit} bg="primary" text="white" />
       </div>
 
       {/* Charts Container */}
@@ -92,7 +89,7 @@ export default function Dashboard() {
           boxShadow: "0 1px 5px #0001",
           padding: 18
         }}>
-          <h3 style={{ margin: 0, marginBottom: 8 }}>Income vs Expenses</h3>
+          <h3 style={{ marginBottom: 8 }}>Income vs Expenses</h3>
           <ResponsiveContainer width="100%" height={240}>
             <PieChart>
               <Pie
@@ -122,7 +119,7 @@ export default function Dashboard() {
           boxShadow: "0 1px 5px #0001",
           padding: 18
         }}>
-          <h3 style={{ margin: 0, marginBottom: 8 }}>Monthly Income (Line Chart)</h3>
+          <h3 style={{ marginBottom: 8 }}>Monthly Income (Line Chart)</h3>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={data.monthlyData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -145,7 +142,7 @@ export default function Dashboard() {
           boxShadow: "0 1px 5px #0001",
           padding: 18
         }}>
-          <h3 style={{ margin: 0, marginBottom: 8 }}>Monthly Income (Bar Chart)</h3>
+          <h3 style={{ marginBottom: 8 }}>Monthly Income (Bar Chart)</h3>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={data.monthlyData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -157,31 +154,6 @@ export default function Dashboard() {
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function StatCard({ label, value, color }) {
-  return (
-    <div style={{
-      flexGrow: 1,
-      minWidth: 180,
-      background: "#fff",
-      padding: "1.2rem 2rem",
-      borderRadius: 12,
-      boxShadow: "0 1px 6px #0001"
-    }}>
-      <div style={{ color, fontWeight: "600", fontSize: 22 }}>
-        ${Number(value).toLocaleString()}
-      </div>
-      <div style={{
-        color: "#1e293b",
-        fontWeight: "500",
-        fontSize: 15,
-        marginTop: 8
-      }}>
-        {label}
       </div>
     </div>
   );

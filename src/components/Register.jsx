@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 
 export default function Register() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -11,9 +13,19 @@ export default function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    // Save user credentials
     localStorage.setItem("demoUser", JSON.stringify(form));
-    setMessage("Account created! You can now login.");
+    // Log in the user immediately
+    localStorage.setItem("loggedInUser", JSON.stringify({ email: form.email }));
+    setMessage("Account created! Redirecting to dashboard...");
+
+    // Clear form
     setForm({ email: "", password: "" });
+
+    // Redirect to dashboard after short delay
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
   }
 
   return (
